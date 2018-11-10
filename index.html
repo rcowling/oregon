@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>Oregon Emissions</title>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+   <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>    
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />  
+  <style>
+    body { margin:0; padding:0; }
+    #map { 
+	position:absolute; top:0; bottom:0; width:100%; margin-top: 56px;
+    }
+    nav {
+	height: 56px;
+	line-height: 56px;
+	background-color: #696969; 	
+    }    
+    ut:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea {
+        -webkit-box-sizing: inherit !important; 
+    }
+  </style>
+</head>
+<body>
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css' type='text/css' />        
+ <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">Oregon Emissions</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">        
+      </ul>
+    </div>
+  </nav>
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoicG1hcnN0ZXIiLCJhIjoiY2pvMGV0eHhiMDAzMjN3cWloN2ZoemZqbSJ9.BD5MfCq12aN29vrDfKd7uw';
+const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/pmarster/cjo0gg6an0aga2rpccw8omn15',
+  center: [-104.960000, 39.680000],
+  zoom: 13.0
+});
+    
+map.addControl(new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    placeholder: "Enter Zip Code"
+}));    
+</script>
+ <!--JavaScript at end of body for optimized loading-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
