@@ -45,7 +45,7 @@ const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/pmarster/cjoc2swsr0xi52snnj7av01jf',
   center: [-122.640, 45.536],
-  zoom: 13.0
+  zoom: 6.0
 });
     
 function getUniqueFeatures(array, comparatorProperty) {
@@ -89,7 +89,7 @@ map.addControl(new MapboxGeocoder({
     accessToken: mapboxgl.accessToken,
     localGeocoder: forwardGeocoder,
     zoom: 14,
-    minLength: 5,
+    minLength: 2,
     limit: 20,    
     placeholder: "Enter search e.g. Lincoln Park"
 }));    
