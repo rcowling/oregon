@@ -79,7 +79,7 @@ function forwardGeocoder(query) {
         
         feature['place_name'] = '🌲 ' + feature.properties.GEOID10;
         feature['center'] = feature.geometry.coordinates[0][1];
-        feature['place_type'] = ['GEOID10'];
+        feature['place_type'] = ['park'];
         matchingFeatures.push(feature);       
     }
     return matchingFeatures;
