@@ -43,14 +43,55 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoicG1hcnN0ZXIiLCJhIjoiY2pvMGV0eHhiMDAzMjN3cWloN2ZoemZqbSJ9.BD5MfCq12aN29vrDfKd7uw';
 const map = new mapboxgl.Map({
   container: 'map',
-  style: 'mapbox://styles/pmarster/cjo0gg6an0aga2rpccw8omn15',
-  center: [-104.960000, 39.680000],
+  style: 'mapbox://styles/pmarster/cjoc2swsr0xi52snnj7av01jf',
+  center: [-122.640, 45.536],
   zoom: 13.0
 });
     
+function getUniqueFeatures(array, comparatorProperty) {
+    var existingFeatureKeys = {};
+    // Because features come from tiled vector data, feature geometries may be split
+    // or duplicated across tile boundaries and, as a result, features may appear
+    // multiple times in query results.
+    var uniqueFeatures = array.filter(function(el) {
+        if (existingFeatureKeys[el.properties[comparatorProperty]]) {
+            return false;
+        } else {
+            existingFeatureKeys[el.properties[comparatorProperty]] = true;
+            return true;
+        }
+    });
+
+    return uniqueFeatures;
+}    
+    
+function forwardGeocoder(query) {
+    var matchingFeatures = [];
+    var features = map.queryRenderedFeatures('oregon-geo');// replace this with the name of the layer
+    var uniqueFeatures = getUniqueFeatures(features, "GEOID10");
+            // Populate features for the listing overlay.
+            //renderListings(uniqueFeatures);
+    for (var i = 0; i < uniqueFeatures.length; i++) {
+        var feature = uniqueFeatures[i];
+        //var coordinates = feature.geometry.coordinates;
+        //console.log(feature.geometry.coordinates);
+        // handle queries with different capitalization than the source data by calling toLowerCase() 
+        
+        feature['place_name'] = '🌲 ' + feature.properties.GEOID10;
+        feature['center'] = feature.geometry.coordinates[0][1];
+        feature['place_type'] = ['GEOID10'];
+        matchingFeatures.push(feature);       
+    }
+    return matchingFeatures;
+}
+
 map.addControl(new MapboxGeocoder({
     accessToken: mapboxgl.accessToken,
-    placeholder: "Enter Zip Code"
+    localGeocoder: forwardGeocoder,
+    zoom: 14,
+    minLength: 5,
+    limit: 20,    
+    placeholder: "Enter search e.g. Lincoln Park"
 }));    
 </script>
  <!--JavaScript at end of body for optimized loading-->
